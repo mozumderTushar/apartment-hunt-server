@@ -26,7 +26,7 @@ client.connect(err => {
   //post all fakeData to server
   app.post('/apartments', (req, res) => {
     const apartmentInfo = req.body;
-    apartmentCollection.insertMany(apartmentInfo)
+    rentCollection.insertMany(apartmentInfo)
       .then(result => {
         console.log(result.insertedCount)
         res.send(result.insertedCount)
@@ -43,6 +43,14 @@ client.connect(err => {
       })
   })
 });
+
+  //get all apartment Info from server
+  app.get('/allApartments', (req, res) => {
+    rentCollection.find({})
+      .toArray((err, documents) => {
+        res.send(documents)
+      })
+  })
 
 
 app.get('/', (req, res) => {

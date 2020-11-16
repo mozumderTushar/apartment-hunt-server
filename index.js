@@ -28,8 +28,8 @@ client.connect(err => {
     const apartmentInfo = req.body;
     rentCollection.insertMany(apartmentInfo)
       .then(result => {
-        console.log(result.insertedCount)
-        res.send(result.insertedCount)
+        console.log(result)
+        res.send(result)
       })
   })
 
@@ -50,7 +50,7 @@ client.connect(err => {
           res.send(documents)
         })
     })
-    
+
 });
 
 

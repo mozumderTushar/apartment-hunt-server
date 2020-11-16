@@ -42,15 +42,17 @@ client.connect(err => {
         res.send(result)
       })
   })
+
+    //get all apartment Info from server
+    app.get('/allApartments', (req, res) => {
+      rentCollection.find({})
+        .toArray((err, documents) => {
+          res.send(documents)
+        })
+    })
+    
 });
 
-  //get all apartment Info from server
-  app.get('/allApartments', (req, res) => {
-    rentCollection.find({})
-      .toArray((err, documents) => {
-        res.send(documents)
-      })
-  })
 
 
 app.get('/', (req, res) => {

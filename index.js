@@ -44,8 +44,8 @@ client.connect(err => {
       })
   })
 
-   // add booking to server
-   app.post('/booking', (req, res) => {
+  // add booking to server
+  app.post('/booking', (req, res) => {
     const book = req.body;
     bookingCollection.insertOne(book)
       .then(result => {
@@ -62,13 +62,27 @@ client.connect(err => {
       })
   })
 
-    //get all apartment Info from server
-    app.get('/allApartments', (req, res) => {
-      rentCollection.find({})
-        .toArray((err, documents) => {
-          res.send(documents)
-        })
-    })
+  //get all apartment Info from server
+  app.get('/allApartments', (req, res) => {
+    rentCollection.find({})
+      .toArray((err, documents) => {
+        res.send(documents)
+      })
+  })
+
+  //---------------- update Status
+  app.patch('/updateStatus', (req, res) => {
+    bookingCollection.updateOne(
+      { _id: ObjectId(req.body.id) },
+      {
+        $set: { status: req.body.newStatus },
+        $currentDate: { "lastModified": true }
+      }
+    )
+      .then(result => {
+        res.send(result.modifiedCount > 0)
+      })
+  })
 
 });
 

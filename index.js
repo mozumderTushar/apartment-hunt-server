@@ -18,9 +18,20 @@ const port = 5000
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
+  const apartmentCollection = client.db("apartmentHunt").collection("apartment");
   const rentCollection = client.db("apartmentHunt").collection("rent");
   // perform actions on the collection object
   console.log('db connection successful')
+
+  //post all fakeData to server
+  app.post('/apartments', (req, res) => {
+    const apartmentInfo = req.body;
+    apartmentCollection.insertMany(apartmentInfo)
+      .then(result => {
+        console.log(result.insertedCount)
+        res.send(result.insertedCount)
+      })
+  })
 
   // add rent to server
   app.post('/addRent', (req, res) => {
